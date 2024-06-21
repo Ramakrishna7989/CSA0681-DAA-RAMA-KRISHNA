@@ -1,15 +1,19 @@
 #include <stdio.h>
 int main() {
-    int num, reversedNum = 0, remainder;
-    printf("Enter an integer: ");
+    int num, sum = 0;
+    printf("Enter a number: ");
     scanf("%d", &num);
 
-    while (num != 0) {
-        remainder = num % 10;
-        reversedNum = reversedNum * 10 + remainder;
-        num /= 10;
+    for (int i = 1; i < num; i++) {
+        if (num % i == 0) {
+            sum += i;
+        }
     }
-    printf("Reversed number = %d", reversedNum);
+    if (sum == num) {
+        printf("%d is a perfect number.\n", num);
+    } else {
+        printf("%d is not a perfect number.\n", num);
+    }
     return 0;
 }
 
