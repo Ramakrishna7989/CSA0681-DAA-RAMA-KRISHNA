@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int binarySearch(int arr[], int left, int right, int target) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        if (arr[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+
+    return -1;
+}
+
+int main() {
+    int nums[] = { -11, 4, 5, 10, 20, 23, 45, 50 };
+    int target = 5;
+    int n = sizeof(nums) / sizeof(nums[0]);
+    int result = binarySearch(nums, 0, n - 1, target);
+
+    if (result != -1)
+        printf("Found at position: %d\n", result);
+    else
+        printf("Not found\n");
+
+    return 0;
+}
