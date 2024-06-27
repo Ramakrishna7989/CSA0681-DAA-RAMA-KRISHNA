@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void generateUniquePermutations(int* nums, int numsSize, int index, bool* used) {
+    if (index == numsSize) {
+        // Print the permutation
+        for (int i = 0; i < numsSize; i++) {
+            printf("%d ", nums[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    for (int i = index; i < numsSize; i++) {
+        if (i == index || nums[i] != nums[index]) {
+            swap(&nums[i], &nums[index]);
+            generateUniquePermutations(nums, numsSize, index + 1, used);
+            swap(&nums[i], &nums[index]);
+        }
+    }
+}
+
+int main() {
+    int nums[] = {1, 1, 2};
+    int numsSize = sizeof(nums) / sizeof(nums[0]);
+    bool* used = (bool*)malloc(numsSize * sizeof(bool));
+    generateUniquePermutations(nums, numsSize, 0, used);
+    free(used);
+    return 0;
+}
