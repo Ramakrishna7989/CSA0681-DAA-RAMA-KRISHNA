@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_EDGES 20
+
+struct Edge {
+    int source, destination, weight;
+};
+
+struct Graph {
+    int numVertices, numEdges;
+    struct Edge edges[MAX_EDGES];
+};
+
+struct Graph* createGraph(int vertices, int edges);
+void kruskalMST(struct Graph* graph);
+int find(int parent[], int vertex);
+void unionSets(int parent[], int rank[], int x, int y);
+
+int main() {
+    int vertices = 4;
+    int edges = 5;
+    struct Graph* graph = createGraph(vertices, edges);
+    kruskalMST(graph);
+    return 0;
+}
+
+struct Graph* createGraph(int vertices, int edges) {
+    struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
+    graph->numVertices = vertices;
+    graph->numEdges = edges;
+
+    graph->edges[0].source = 0;
+    graph->edges[0].destination = 1;
+    graph->edges[0].weight = 10;
+
+    graph->edges[1].source = 0;
+    graph->edges[1].destination = 2;
+    graph->edges[1].weight = 6;
+
+    graph->edges[2].source = 0;
+    graph->edges[2].destination = 3;
+    graph->edges[2].weight = 5;
+
+    graph->edges[3].source = 1;
+    graph->edges[3].destination = 3;
+    graph->edges[3].weight = 15;
+
+    graph->edges[4].source = 2;
+    graph->edges[4].destination = 3;
+    graph->edges[4].weight = 4;
+
+    return graph;
+}
+
+void kruskalMST(struct Graph* graph) {
+    int parent[graph->numVertices];
+    int rank[graph->numVertices];
+    struct Edge resultMST[graph->numVertices];
+    int e = 0;
+    int i = 0;
+
+    qsort(graph->edges, graph->numEdges, sizeof(graph->edges[0]), compareEdges);
+
+    for (int v = 0; v < graph->numVertices; v++) {
+        parent[v] = v;
+        rank[v] = 0;
+    }
+
+    while (e < graph->numVertices - 1 && i < graph->numEdges) {
+        struct Edge nextEdge = graph->edges[i++];
+
+        int x = find(parent, nextEdge.source);
+        int y = find(parent, nextEdge.destination);
+
+        if (x != y) {
+            resultMST[e++] = nextEdge;
+            unionSets(parent, rank, x, y);
+        }
+    }
+
+    printf("Edges in the Minimum Spanning Tree:\n");
+    for (i = 0; i < e; i++) {
+        printf("%d -- %d == %d\n", resultMST[i].source, resultMST[i].destination, resultMST[i].weight);
+    }
+}
+
+int find(int parent[], int vertex) {
+    if (parent[vertex] != vertex) {
+        parent[vertex] = find(parent, parent[vertex]);
+    }
+    return parent[vertex];
+}
+
+void unionSets(int parent[], int rank[], int x, int y) {
+    int rootX = find(parent, x);
+    int rootY = find(parent, y);
+
+    if (rank[rootX] < rank[rootY]) {
+        parent[rootX] = rootY;
+    } else if (rank[rootX] > rank[rootY]) {
+        parent[rootY] = rootX;
+    } else {
+        parent[rootY] = rootX;
+        rank[rootX]++;
+    }
+}
