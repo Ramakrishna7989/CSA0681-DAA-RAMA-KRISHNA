@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int wordBreak(char *s, char *wordDict[], int wordDictSize) {
+    int n = strlen(s);
+    int dp[n + 1];
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (dp[j] && inDictionary(s + j, i - j, wordDict, wordDictSize)) {
+                dp[i] = 1;
+                break;
+            }
+        }
+    }
+
+    return dp[n];
+}
+
+int inDictionary(char *s, int len, char *wordDict[], int wordDictSize) {
+    for (int i = 0; i < wordDictSize; i++) {
+        if (strlen(wordDict[i]) == len && strncmp(s, wordDict[i], len) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main() {
+    char *s = "leetcode";
+    char *wordDict[] = {"leet", "code"};
+    int wordDictSize = 2;
+
+    if (wordBreak(s, wordDict, wordDictSize)) {
+        printf("The string can be segmented into words from the dictionary.\n");
+    } else {
+        printf("The string cannot be segmented into words from the dictionary.\n");
+    }
+
+    return 0;
+}
