@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+#define MAX_VAL 10
+
+void bucketSort(int arr[], int n) {
+    int bucket[MAX_VAL + 1] = {0};
+
+    for (int i = 0; i < n; i++) {
+        bucket[arr[i]]++;
+    }
+
+    for (int i = 0, j = 0; i <= MAX_VAL; i++) {
+        while (bucket[i] > 0) {
+            arr[j++] = i;
+            bucket[i]--;
+        }
+    }
+}
+
+int main() {
+    int arr[] = {4, 2, 7, 1, 3, 5, 6, 8, 10, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    bucketSort(arr, n);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
