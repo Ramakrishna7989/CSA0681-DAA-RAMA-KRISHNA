@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int masterTheorem(int a, int b, int k) {
+    if (a > 1) {
+        return k;
+    } else if (a == 1 && b > 1) {
+        return k;
+    } else {
+        return k;
+    }
+}
+
+int main() {
+    int a = 1, b = 2, k = 3;
+    int result = masterTheorem(a, b, k);
+    printf("Result: %d\n", result);
+    return 0;
+}
