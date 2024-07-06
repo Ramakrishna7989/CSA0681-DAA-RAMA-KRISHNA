@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int arr[] = {3, 7, 1, 9, 2, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    qsort(arr, n, sizeof(int), compare);
+
+    double median;
+    if (n % 2 == 0) {
+        median = (arr[n/2 - 1] + arr[n/2]) / 2.0;
+    } else {
+        median = arr[n/2];
+    }
+
+    printf("Median = %.2f", median);
+
+    return 0;
+}
