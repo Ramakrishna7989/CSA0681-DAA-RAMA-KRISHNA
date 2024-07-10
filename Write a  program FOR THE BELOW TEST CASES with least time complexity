@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int findMax(int arr[], int size) {
+    int max = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    int arr1[] = {1, 2, 3, 4, 5};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    printf("Max element in arr1: %d\n", findMax(arr1, size1));
+
+    int arr2[] = {7, 7, 7, 7, 7};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+    printf("Max element in arr2: %d\n", findMax(arr2, size2));
+
+    int arr3[] = {-10, 2, 3, -4, 5};
+    int size3 = sizeof(arr3) / sizeof(arr3[0]);
+    printf("Max element in arr3: %d\n", findMax(arr3, size3));
+
+    return 0;
+}
