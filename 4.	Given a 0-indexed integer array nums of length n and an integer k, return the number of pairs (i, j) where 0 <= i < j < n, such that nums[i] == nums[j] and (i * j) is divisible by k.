@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 1000
+
+int countPairs(int nums[], int n, int k) {
+    int count = 0;
+    int freq[MAX] = {0};
+
+    for (int i = 0; i < n; i++) {
+        if (freq[nums[i] % k] > 0) {
+            count += freq[nums[i] % k];
+        }
+        freq[nums[i] % k]++;
+    }
+    return count;
+}
+
+int main() {
+    int nums[] = {3, 1, 2, 2, 2, 1, 3};
+    int n = sizeof(nums) / sizeof(nums[0]);
+    int k = 2;
+    int result = countPairs(nums, n, k);
+    printf("Number of pairs: %d\n", result);
+    return 0;
+}
