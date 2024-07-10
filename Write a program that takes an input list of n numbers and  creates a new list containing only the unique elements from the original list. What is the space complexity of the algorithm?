@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+int main() {
+    int originalList[MAX_SIZE], uniqueList[MAX_SIZE];
+    int n, i, j, isUnique;
+
+    printf("Enter the number of elements in the list: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &originalList[i]);
+    }
+
+    int uniqueCount = 0;
+    for (i = 0; i < n; i++) {
+        isUnique = 1;
+        for (j = 0; j < uniqueCount; j++) {
+            if (originalList[i] == uniqueList[j]) {
+                isUnique = 0;
+                break;
+            }
+        }
+        if (isUnique) {
+            uniqueList[uniqueCount++] = originalList[i];
+        }
+    }
+
+    printf("Unique elements in the list are: ");
+    for (i = 0; i < uniqueCount; i++) {
+        printf("%d ", uniqueList[i]);
+    }
+
+    return 0;
+}
